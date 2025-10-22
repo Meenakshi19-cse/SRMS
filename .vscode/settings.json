@@ -1,0 +1,7 @@
+{
+    "CodeGPT.apiKey": "Anthropic",
+    "editor.tokenColorCustomizations": {
+        "comments": "",
+        "textMateRules": []
+    }
+}
