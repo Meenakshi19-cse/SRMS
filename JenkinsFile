@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "records"
+        IMAGE_TAG = "latest"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Meenakshi19-cse/SRMS.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Stop old container if running
+                    sh 'docker rm -f records-container || true'
+                    // Start new container
+                    sh 'docker run -d -p 5173:80 --name records-container $IMAGE_NAME:$IMAGE_TAG'
+                }
+            }
+        }
+    }
+}
