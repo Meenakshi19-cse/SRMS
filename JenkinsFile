@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+                    bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
                 }
             }
         }
@@ -25,9 +25,9 @@ pipeline {
             steps {
                 script {
                     // Stop old container if running
-                    sh 'docker rm -f records-container || true'
+                    bat 'docker rm -f records-container || true'
                     // Start new container
-                    sh 'docker run -d -p 5173:80 --name records-container $IMAGE_NAME:$IMAGE_TAG'
+                    bat 'docker run -d -p 5173:80 --name records-container %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
